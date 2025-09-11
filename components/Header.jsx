@@ -23,7 +23,7 @@ const Header = () => {
           <div className="flex items-center space-x-2 sm:space-x-3">
             <Image
               src="/images/admin.jpg"
-              alr="admin"
+              alt="admin"
               width={35}
               height={35}
               className="rounded-full border border-gray-600"
