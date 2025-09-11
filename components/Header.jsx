@@ -1,4 +1,3 @@
-import { header } from "framer-motion/client";
 import Image from "next/image";
 import React from "react";
 import { Bell } from "lucide-react";
