@@ -37,7 +37,7 @@ const Sidebar = () => {
 
   return (
     <div
-      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 ${
+      className={`relative z-10 transition-all duration-300 ease-in-out flex-shrink-0 text-white ${
         isSidebarOpen ? "w-64" : "w-20"
       }`}
     >
