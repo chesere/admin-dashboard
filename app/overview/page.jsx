@@ -3,6 +3,7 @@ import React from "react";
 import { DollarSign, ShoppingBag, SquareActivity, Users } from "lucide-react";
 import StartCard from "@/components/StartCard";
 import { motion } from "framer-motion";
+import SalesOverviewChart from "@/components/SalesOverviewChart";
 
 const OverviewPage = () => {
   return (
@@ -19,6 +20,9 @@ const OverviewPage = () => {
           <StartCard name="Total Products" icon={ShoppingBag} value="100" />
           <StartCard name="stock" icon={SquareActivity} value="800" />
         </motion.div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <SalesOverviewChart />
+        </div>
       </main>
     </div>
   );
