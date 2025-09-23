@@ -1,6 +1,7 @@
 "Use client";
 import { color } from "framer-motion";
 import React, { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import {
   Cell,
   Legend,
@@ -29,7 +30,12 @@ const CategoryDistributionChart = () => {
   }, []);
   const outerRadius = isSmallOrMediumScreen ? 60 : 80;
   return (
-    <div className="bg-#1e1e1e backdrop-blur-md shadow-lg rounded-xl p-4 md:p-6 border border-#1f1f1f mx-2 md:mx-0">
+    <motion.div
+      className="bg-#1e1e1e backdrop-blur-md shadow-lg rounded-xl p-4 md:p-6 border border-#1f1f1f mx-2 md:mx-0"
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ delay: 0.3, duration: 0.5 }}
+    >
       <h2 className="text-base md:text-lg font-medium mb-4 text-gray-100 text-center md:text-left ">
         Category Distribution
       </h2>
@@ -73,7 +79,7 @@ const CategoryDistributionChart = () => {
           </PieChart>
         </ResponsiveContainer>
       </div>
-    </div>
+    </motion.div>
   );
 };
 
