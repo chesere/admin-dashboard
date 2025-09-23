@@ -1,6 +1,15 @@
 "Use client";
+import { color } from "framer-motion";
 import React, { useState, useEffect } from "react";
-import { Pie, PieChart, ResponsiveContainer } from "recharts";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
+const COLORS = ["#FF6B6B", "#4D96FF", "#FFD166", "#06D6A0", "#A290FE"];
 
 const CategoryDistributionChart = () => {
   const [categoryData, setCategoryData] = useState([]);
@@ -17,7 +26,39 @@ const CategoryDistributionChart = () => {
       <div className="h-64 md:h-80">
         <ResponsiveContainer width="100%" height="100%">
           <PieChart>
-            <Pie data={categoryData} cx="50%" cy="50%"></Pie>
+            <Pie
+              data={categoryData}
+              cx="50%"
+              cy="50%"
+              labeLine={false}
+              dataKey="value"
+              label={({ name, percent }) =>
+                `${name} ${(percent * 100).toFixed(0)}%`
+              }
+            >
+              {categoryData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "rgba(31,41,55,0.8)",
+                borderBlock: "#4b5563",
+                borderRadius: "8px",
+                padding: "8px",
+                fontSize: "12px",
+              }}
+              itemStyle={{ color: "#e5e7eb" }}
+            />
+            <Legend
+              iconType="circle"
+              layout="horizontal"
+              align="center"
+              wrapperStyle={{ fontSize: 12 }}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>
