@@ -1,6 +1,13 @@
 "use client";
 import React, { useEffect, useState } from "react";
-import { Pie, PieChart, ResponsiveContainer } from "recharts";
+import {
+  Cell,
+  Legend,
+  Pie,
+  PieChart,
+  ResponsiveContainer,
+  Tooltip,
+} from "recharts";
 
 const COLORS = ["#FBC02D", "#03a9f4", "#EF4444", "#8bc34a"];
 
@@ -30,7 +37,32 @@ const OrderDistributionChart = () => {
               label={({ name, percent }) =>
                 `${name} ${(percent * 100).toFixed(0)}%`
               }
-            ></Pie>
+              labelLine={{ stroke: "#9ca3af" }}
+            >
+              {orderStatusData.map((entry, index) => (
+                <Cell
+                  key={`cell-${index}`}
+                  fill={COLORS[index % COLORS.length]}
+                />
+              ))}
+            </Pie>
+            <Tooltip
+              contentStyle={{
+                backgroundColor: "rgba(31,41,55,0.8)",
+                borderColor: "#4b5563",
+                borderRadius: "8px",
+                padding: "8px",
+                fontSize: "12px",
+              }}
+              itemStyle={{ color: "#e5e7eb" }}
+              cursor={{ fill: "rgba(255,255,255,0.1)" }}
+            />
+            <Legend
+              iconType="circle"
+              layout="horizontal"
+              align="center"
+              wrapperStyle={{ fontSize: 12 }}
+            />
           </PieChart>
         </ResponsiveContainer>
       </div>
