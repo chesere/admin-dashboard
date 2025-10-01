@@ -5,6 +5,7 @@ import StartCard from "@/components/StartCard";
 import { motion } from "framer-motion";
 import SalesOverviewChart from "@/components/SalesOverviewChart";
 import CategoryDistributionChart from "@/components/CategoryDistributionChart";
+import OrderDistributionChart from "@/components/OrderDistributionChart";
 
 const OverviewPage = () => {
   return (
@@ -24,6 +25,7 @@ const OverviewPage = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <SalesOverviewChart />
           <CategoryDistributionChart />
+          <OrderDistributionChart />
         </div>
       </main>
     </div>
