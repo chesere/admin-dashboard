@@ -15,7 +15,7 @@ const Header = () => {
             alt="Country flag"
             width={25}
             height={18}
-            className="rounded-full shadow-md cursor-pointer"
+            className="shadow-md cursor-pointer"
           />
           <div className="relative">
             <Bell className="w-5 sm:w-6 h-5 sm:h-6 text-gray-300 cursor-pointer hover:text-white" />
