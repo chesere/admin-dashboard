@@ -26,6 +26,30 @@ const ProductsTable = () => {
           <Search className="absolute left-3 top-2.5 text-gray-400" size={18} />
         </div>
       </div>
+      <div className="overflow-x-auto">
+        <table className="min-w-full divide-y divide-gray-700">
+          <thead>
+            <tr>
+              {[
+                "Name",
+                "Product ID",
+                "Category",
+                "Price",
+                "Stock",
+                "Sales",
+                "Actions",
+              ].map((header) => (
+                <th
+                  key={header}
+                  className="px-3 md:px-6 py-2 md:py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden md:table-cell    "
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        </table>
+      </div>
     </motion.div>
   );
 };
