@@ -2,13 +2,14 @@
 import React, { useMemo, useState } from "react";
 import productData from "../public/data/data.json";
 import { motion } from "framer-motion";
-import { Edit, Search, Trash2 } from "lucide-react";
+import { Edit, Save, Search, Trash2 } from "lucide-react";
 import { div, td } from "framer-motion/client";
 import Image from "next/image";
 
 const ProductsTable = () => {
   const [products, setProducts] = useState(productData.products);
   const [searchTerm, setSearchTerm] = useState("");
+  const [editingRow, setEditingRow] = useState(null);
 
   const filteredProducts = useMemo(() => {
     return products.filter(
@@ -20,7 +21,21 @@ const ProductsTable = () => {
           .toLocaleLowerCase()
           .includes(searchTerm.toLocaleLowerCase())
     );
-  });
+  }, [searchTerm, products]);
+  const handleEditClick = (id) => {
+    setEditingRow(id);
+  };
+  const handleSaveClick = () => {
+    setEditingRow(null);
+  };
+  const handleChange = (id, field, value) => {
+    if (!/^\d*\.?\d*$/.test(value)) return; //Allows entry of only decimals and numbers
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === id ? { ...product, [field]: Number(value) } : product
+      )
+    );
+  };
   return (
     <motion.div
       className="bg-[#1e1e1e] backdrop-blur-md shadow-lg rounded-xl p-4 md:p-6 border border-[#1f1f1f] mx-2 md:mx-0 mb-8"
@@ -72,7 +87,9 @@ const ProductsTable = () => {
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: 0.1, duration: 0.3 }}
-                className="flex flex-col md:table-row md:mb-0 border-b md:border-b-0 border-gray-700 md:border-none p-2 md:p-0 "
+                className={`flex flex-col md:table-row md:mb-0 border-b md:border-b-0 border-gray-700 md:border-none p-2 md:p-0 ${
+                  editingRow === product.id ? "bg-[#2f2f2f] ring-gray-500" : ""
+                } `}
               >
                 <td className="md:hidden px-3 py-2">
                   <div className="flex items-center justify-between ">
@@ -94,8 +111,19 @@ const ProductsTable = () => {
                       </div>
                     </div>
                     <div className="flex space-x-1 -mt-1 -mr-1">
-                      <button className="text-indigo-500 hover:text-indigo-300">
-                        <Edit size={16} />
+                      <button
+                        className="text-indigo-500 hover:text-indigo-300"
+                        onClick={() =>
+                          editingRow === product.id
+                            ? handleSaveClick()
+                            : handleEditClick(product.id)
+                        }
+                      >
+                        {editingRow === product.id ? (
+                          <Save size={16} />
+                        ) : (
+                          <Edit size={16} />
+                        )}
                       </button>
                       <button className="text-red-500 hover:text-red-300">
                         <Trash2 size={16} />
@@ -106,9 +134,21 @@ const ProductsTable = () => {
                     <div> Category:{product.category}</div>
                     {["price", "stock", "sales"].map((field) => (
                       <div key={field}>
-                        <span className="capitalize">
-                          {field}:{product[field]}
-                        </span>
+                        <span className="capitalize">{field}:</span>
+                        {editingRow === product.id ? (
+                          <input
+                            type="text"
+                            className="bg-transparent text-white border border-gray-400 w-16 text-center text-xs ml-1"
+                            value={product[field]}
+                            onChange={(e) =>
+                              handleChange(product.id, field, e.target.value)
+                            }
+                          />
+                        ) : field === "price" ? (
+                          `$${product[field].toFixed(2)}`
+                        ) : (
+                          product[field]
+                        )}
                       </div>
                     ))}
                   </div>
@@ -134,17 +174,41 @@ const ProductsTable = () => {
                 {["price", "stock", "sales"].map((field) => (
                   <td
                     key={field}
-                    className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300"
+                    className={`hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300 ${
+                      editingRow === product.id ? "border border-gray-400" : ""
+                    }`}
                   >
-                    {field === "price"
-                      ? `$${product[field].toFixed(2)}`
-                      : product[field]}
+                    {editingRow === product.id ? (
+                      <input
+                        type="text"
+                        className="bg-transparent text-white border-none outline-none w-16 text-center"
+                        value={product[field]}
+                        onChange={(e) =>
+                          handleChange(product.id, field, e.target.value)
+                        }
+                      />
+                    ) : field === "price" ? (
+                      `$${product[field].toFixed(2)}`
+                    ) : (
+                      product[field]
+                    )}
                   </td>
                 ))}
                 <td className="hidden md:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300">
                   <div className="flex space-x-1 -ml-2">
-                    <button className="text-indigo-500 hover:text-indigo-300 mr-1 cursor-pointer">
-                      <Edit size={18} />
+                    <button
+                      className="text-indigo-500 hover:text-indigo-300 mr-1 cursor-pointer"
+                      onClick={() =>
+                        editingRow === product.id
+                          ? handleSaveClick()
+                          : handleEditClick(product.id)
+                      }
+                    >
+                      {editingRow === product.id ? (
+                        <Save size={18} />
+                      ) : (
+                        <Edit size={18} />
+                      )}
                     </button>
                     <button className="text-red-500 hover:text-red-300 cursor-pointer">
                       <Trash2 size={18} />
