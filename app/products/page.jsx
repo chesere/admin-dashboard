@@ -8,6 +8,7 @@ import {
   ShoppingBag,
   SquareActivity,
 } from "lucide-react";
+import ProductsTable from "@/components/ProductsTable";
 
 const ProductPage = () => {
   return (
@@ -28,6 +29,7 @@ const ProductPage = () => {
           <StartCard name="Total Sold" icon={DollarSign} value={"2,800"} />
           <StartCard name="Total Categories" icon={ChartBarStacked} value={6} />
         </motion.div>
+        <ProductsTable />
       </main>
     </div>
   );
