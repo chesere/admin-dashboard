@@ -6,6 +6,8 @@ import Image from "next/image";
 
 const UsersTable = () => {
   const [clients, setClients] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+
   useEffect(() => {
     const fetchClients = async () => {
       try {
@@ -18,6 +20,11 @@ const UsersTable = () => {
     };
     fetchClients();
   }, []);
+  const filteredClients = clients.filter(
+    (client) =>
+      client.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      client.email.toLowerCase().includes(searchTerm.toLowerCase())
+  );
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -32,6 +39,8 @@ const UsersTable = () => {
         <div className="relative w-full sm:w-auto">
           <input
             type="text"
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
             placeholder="Search Clients"
             className="bg-[#2f2f2f] text-white placeholder-gray-400 rounded-lg pl-10 pr-4 py-2  w-full sm:w-64 focus:outline-none focus:ring-2 focus:ring-gray-500 duration-200 text-sm"
           />
@@ -58,7 +67,7 @@ const UsersTable = () => {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-700">
-            {clients.map((client, index) => (
+            {filteredClients.map((client, index) => (
               <motion.tr
                 key={client.id}
                 initial={{ opacity: 0, y: 10 }}
@@ -98,6 +107,43 @@ const UsersTable = () => {
                   <div className="mt-2 text-xs text-gray-300">
                     <div>Phone: {client.phoneNumber}</div>
                     <div>Coutry: {client.country}</div>
+                  </div>
+                </td>
+                {/* Desktop view */}
+                <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap">
+                  <div className="flex items-center">
+                    <Image
+                      src={client.image}
+                      alt="client image"
+                      width={40}
+                      height={40}
+                      className="w-10 h-10 rounded-full"
+                    />
+                    <div className="ml-4">
+                      <div className="text-sm font-medium text-gray-100">
+                        {client.name}
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  {" "}
+                  {client.email}
+                </td>
+                <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  {client.phoneNumber}
+                </td>
+                <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  {client.country}
+                </td>
+                <td className="hidden sm:table-cell px-6 py-4 whitespace-nowrap text-sm text-gray-300">
+                  <div className="flex space-x-1 -ml-2">
+                    <button className="text-indigo-500 hover:text-indigo-300 mr-1 cursor-pointer">
+                      <Edit size={18} />
+                    </button>
+                    <button className="text-red-500 hover:text-red-300 cursor-pointer">
+                      <Trash2 size={18} />
+                    </button>
                   </div>
                 </td>
               </motion.tr>
