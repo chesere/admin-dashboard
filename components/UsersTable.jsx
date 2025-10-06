@@ -1,7 +1,8 @@
 "use client";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { Search } from "lucide-react";
+import { Edit, Search, Trash2 } from "lucide-react";
+import Image from "next/image";
 
 const UsersTable = () => {
   const [clients, setClients] = useState([]);
@@ -56,6 +57,52 @@ const UsersTable = () => {
               )}
             </tr>
           </thead>
+          <tbody className="divide-y divide-gray-700">
+            {clients.map((client, index) => (
+              <motion.tr
+                key={client.id}
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.3 }}
+                className="flex flex-col sm:table-row mb-4 sm:mb-0 border-b sm:border-b-0 border-gray-700 sm:border-none p-2 sm:p-0"
+              >
+                {/*Mobile view*/}
+                <td className="sm:hidden px-3 py-2">
+                  <div className="flex items-center justify-between">
+                    <div className="flex items-center">
+                      <Image
+                        src={client.image}
+                        width={36}
+                        height={36}
+                        className="w-9 h-9 rounded-full"
+                        alt="client image"
+                      />
+                      <div className="ml-3">
+                        <div className="text-sm font-medium text-gray-100">
+                          {client.name}
+                        </div>
+                        <div className="text-xs text-gray-400">
+                          {client.email}
+                        </div>
+                      </div>
+                    </div>
+                    <div className="flex space-x-1 -mt-5 -mr-4">
+                      <button className="text-ndigo-500 hover:text-indigo-300">
+                        <Edit size={16} />
+                      </button>
+                      <button className="text-red-500 hover:text-red-300">
+                        <Trash2 size={16} />
+                      </button>
+                    </div>
+                  </div>
+                  <div className="mt-2 text-xs text-gray-300">
+                    <div>Phone: {client.phoneNumber}</div>
+                    <div>Coutry: {client.country}</div>
+                  </div>
+                </td>
+              </motion.tr>
+            ))}
+          </tbody>
         </table>
       </div>
     </motion.div>
