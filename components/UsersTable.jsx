@@ -40,6 +40,24 @@ const UsersTable = () => {
           />
         </div>
       </div>
+      <div>
+        <table className="min-w-full divide-y divide-gray-700">
+          <thead>
+            <tr>
+              {["Name", "Email", "Phone Numbers", "Country", "Actions"].map(
+                (header) => (
+                  <th
+                    key={header}
+                    className="px-3 sm:px-6 py-2 sm:py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden sm:table-cell"
+                  >
+                    {header}
+                  </th>
+                )
+              )}
+            </tr>
+          </thead>
+        </table>
+      </div>
     </motion.div>
   );
 };
