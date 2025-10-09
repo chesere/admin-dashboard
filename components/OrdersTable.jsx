@@ -26,7 +26,28 @@ const OrdersTable = () => {
         </div>
       </div>
       <div className="overflow-x-auto">
-        <table className="min-w-full divide-y divide-gray-700"></table>
+        <table className="min-w-full divide-y divide-gray-700">
+          <thead>
+            <tr>
+              {[
+                "order ID",
+                "Client",
+                "Total",
+                "Status",
+                "Date",
+                "Country",
+                "Actions",
+              ].map((header) => (
+                <th
+                  key={header}
+                  className="px-3 md:px-6 py-2 text-left text-xs font-medium text-gray-400 uppercase tracking-wider hidden md:table-cell"
+                >
+                  {header}
+                </th>
+              ))}
+            </tr>
+          </thead>
+        </table>
       </div>
     </motion.div>
   );
