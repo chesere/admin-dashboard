@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { CheckCircle, Clock, ShoppingBag, Ban } from "lucide-react";
 import ordersData from "../../public/data/data.json";
 import StartCard from "@/components/StartCard";
+import OrdersTable from "@/components/OrdersTable";
 
 const iconMap = {
   ShoppingBag,
@@ -33,6 +34,7 @@ const OrdersPage = () => {
             );
           })}
         </motion.div>
+        <OrdersTable />
       </main>
     </div>
   );
